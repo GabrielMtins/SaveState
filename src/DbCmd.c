@@ -114,11 +114,11 @@ static char * Util_ConvertDateToSqlFmt(const char *date) {
 
 static char * Util_GetLogTableYear(int year) {
 	if(year <= 0) {
-		return sqlite3_mprintf("LogTable");
+		return sqlite3_mprintf("LogTable WHERE date(EndDate) IS NOT NULL");
 	}
 
 	return sqlite3_mprintf(
-			"LogTable WHERE StartDate >= '%04d-01-01' AND StartDate < '%04d-01-01'",
+			"LogTable WHERE StartDate >= '%04d-01-01' AND StartDate < '%04d-01-01' AND date(EndDate) IS NOT NULL",
 			year,
 			year + 1
 			);
