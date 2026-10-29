@@ -72,7 +72,7 @@ void Widget_Table(WINDOW *win, const TableWidgetData *data) {
 			Style_SetAttr(win, STYLE_TABLE_ROW);
 		}
 
-		if(line == data->working_table.nrow - 1) {
+		if(current_row == data->working_table.nrow - 1) {
 			wattron(win, A_UNDERLINE);
 		}
 
