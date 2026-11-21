@@ -7,6 +7,7 @@ static const char *button_labels[] = {
 	" Games",
 	" Diary",
 	" Stats",
+	" WishList",
 	" About"
 };
 
@@ -14,6 +15,7 @@ static const int button_to_state[] = {
 	STATE_CATALOG,
 	STATE_LOGVIEW,
 	STATE_STATS,
+	STATE_WISHLIST,
 	STATE_ABOUT,
 };
 
