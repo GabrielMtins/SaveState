@@ -42,11 +42,13 @@ static void TableManager_HandleInputNav(App *app, TableManagerState *state) {
 			if(!is_table_valid) break;
 
 			state->input_state = MANAGER_INPUT_DELETE;
+			TableManager_DrawDeleteConfirmation(app);
 			break;
 
 		case 'f':
 			LineWidgetData_Init(&state->search_data);
 			state->input_state = MANAGER_INPUT_SEARCH;
+			TableManager_DrawSearch(app, state);
 			break;
 
 		case KEY_ESCAPE:
@@ -62,6 +64,7 @@ static void TableManager_HandleInputNav(App *app, TableManagerState *state) {
 static void TableManager_HandleInputSearch(App *app, TableManagerState *state) {
 	app->block_menubar = true;
 	LineWidgetData_HandleInput(&state->search_data, app->ch);
+	TableManager_DrawSearch(app, state);
 
 	switch(app->ch) {
 		case KEY_ESCAPE:
@@ -72,6 +75,7 @@ static void TableManager_HandleInputSearch(App *app, TableManagerState *state) {
 
 		case '\n':
 			App_ClearBottomWindow(app);
+			TableManager_DrawFilterBar(app, state);
 			state->input_state = MANAGER_INPUT_NAV;
 			TableManager_UpdateTable(app, state);
 			break;
@@ -121,12 +125,6 @@ static void TableManager_HandleInput(App *app, TableManagerState *state) {
 static void TableManager_DrawFilterBar(App *app, TableManagerState *state) {
 	WINDOW *win = app->bottom_window;
 
-	/*
-	if(state->search_data.len == 0) {
-		App_ClearBottomWindow(app);
-		return;
-	}
-	*/
 	if(state->search_data.len == 0) {
 		return;
 	}
@@ -163,20 +161,6 @@ static void TableManager_DrawTable(App *app, TableManagerState *state) {
 	
 	wmove(win, 0, 0);
 	Widget_Table(win, &state->table_data);
-
-	switch(state->input_state) {
-		case MANAGER_INPUT_NAV:
-			TableManager_DrawFilterBar(app, state);
-			break;
-
-		case MANAGER_INPUT_DELETE:
-			TableManager_DrawDeleteConfirmation(app);
-			break;
-
-		case MANAGER_INPUT_SEARCH:
-			TableManager_DrawSearch(app, state);
-			break;
-	}
 }
 
 void TableManager_Init(App *app, TableManagerState *state) {
