@@ -30,6 +30,7 @@ commands:
 
 - **J, K, gt, gT, tab, shift+tab**: Navigate between tabs.
 - **a**: Add a new game (when you are in the **Games** tab).
+- **W (Capital W)**: Add a game to wishlist (when you are in the **Games** tab).
 - **i**: Insert a new log for that game (when you are in the **Games** tab).
 - **c**: Change a game entry or a log entry.
 - **f**: Filter a game or log. You can also use it on the **Stats** tab
