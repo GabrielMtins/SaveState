@@ -15,6 +15,7 @@
 	DO(STYLE_ERROR_MSG,        	   A_NORMAL          ) \
 	DO(STYLE_CONFIRM_MSG,      	   A_NORMAL          ) \
 	DO(STYLE_FILTER_MSG,       	   A_NORMAL          ) \
+	DO(STYLE_SUCCESS_MSG,          A_NORMAL          ) \
 	DO(STYLE_MENUBAR_BG,           A_NORMAL          ) \
 	DO(STYLE_MENUBAR_SELECTED, 	   A_REVERSE         ) \
 	DO(STYLE_MENUBAR_OFF,      	   A_REVERSE | A_DIM ) \
@@ -28,7 +29,7 @@
 	DO(STYLE_BOTTOM_BAR,       	   A_REVERSE         ) \
 	DO(STYLE_SEARCH_BG,        	   A_NORMAL          ) \
 	DO(STYLE_SEARCH_CURSOR,    	   A_REVERSE         ) \
-	DO(STYLE_ABOUT_TEXT,       	   A_NORMAL          )  \
+	DO(STYLE_ABOUT_TEXT,       	   A_NORMAL          ) \
 	DO(STYLE_END, 0)
 
 #define EXPAND_AS_ENUM(id, attr1) id,

@@ -8,9 +8,35 @@ static const int cols_width[] = {
 	8,
 };
 
+static void Catalog_AddGameToWishList(App *app, TableManagerState *state);
+static void Catalog_DrawAddedGame(App *app, TableManagerState *state);
 static void Catalog_UpdateTable(App *app, TableManagerState *state);
 static void Catalog_DeleteItem(App *app, TableManagerState *state);
 static void Catalog_HandleInputNav(App *app, TableManagerState *state);
+
+static void Catalog_AddGameToWishList(App *app, TableManagerState *state) {
+	DB_InsertWish(
+			app->db,
+			TableWidgetData_GetSelectedRow(&state->table_data)[0]
+			);
+
+	Catalog_DrawAddedGame(app, state);
+}
+
+static void Catalog_DrawAddedGame(App *app, TableManagerState *state) {
+	WINDOW *win = app->bottom_window;
+
+	wmove(win, 0, 0);
+	Style_SetAttr(win, STYLE_SUCCESS_MSG);
+	Widget_Label(win, " Added ", -1);
+	Widget_Label(
+			win,
+			TableWidgetData_GetSelectedRow(&state->table_data)[0],
+			-1
+			);
+	Widget_Label(win, " to WishList!", -1);
+	Widget_Space(win, -1);
+}
 
 static void Catalog_UpdateTable(App *app, TableManagerState *state) {
 	DB_SearchGame(
@@ -41,6 +67,12 @@ static void Catalog_HandleInputNav(App *app, TableManagerState *state) {
 
 			AddLog_SetGame(app, TableWidgetData_GetSelectedRow(&state->table_data)[0]);
 			app->next_state = STATE_ADDLOG;
+			break;
+
+		case 'W':
+			if(!is_table_valid) break;
+
+			Catalog_AddGameToWishList(app, state);
 			break;
 
 		case 'c':

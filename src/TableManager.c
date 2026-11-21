@@ -50,6 +50,7 @@ static void TableManager_HandleInputNav(App *app, TableManagerState *state) {
 			break;
 
 		case KEY_ESCAPE:
+			App_ClearBottomWindow(app);
 			LineWidgetData_Init(&state->search_data);
 			TableManager_UpdateTable(app, state);
 			break;
@@ -64,11 +65,13 @@ static void TableManager_HandleInputSearch(App *app, TableManagerState *state) {
 
 	switch(app->ch) {
 		case KEY_ESCAPE:
+			App_ClearBottomWindow(app);
 			LineWidgetData_Init(&state->search_data);
 			state->input_state = MANAGER_INPUT_NAV;
 			break;
 
 		case '\n':
+			App_ClearBottomWindow(app);
 			state->input_state = MANAGER_INPUT_NAV;
 			TableManager_UpdateTable(app, state);
 			break;
@@ -79,11 +82,14 @@ static void TableManager_HandleInputDeleteConfirm(App *app, TableManagerState *s
 	switch(app->ch) {
 		case 'n':
 		case KEY_ESCAPE:
+			App_ClearBottomWindow(app);
 			state->input_state = MANAGER_INPUT_NAV;
 			break;
 
 		case 'y':
 		case '\n':
+			App_ClearBottomWindow(app);
+			state->input_state = MANAGER_INPUT_NAV;
 			state->input_state = MANAGER_INPUT_NAV;
 
 			TableManager_DeleteItem(app, state);
@@ -115,8 +121,13 @@ static void TableManager_HandleInput(App *app, TableManagerState *state) {
 static void TableManager_DrawFilterBar(App *app, TableManagerState *state) {
 	WINDOW *win = app->bottom_window;
 
+	/*
 	if(state->search_data.len == 0) {
 		App_ClearBottomWindow(app);
+		return;
+	}
+	*/
+	if(state->search_data.len == 0) {
 		return;
 	}
 

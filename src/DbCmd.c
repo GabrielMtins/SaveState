@@ -114,11 +114,16 @@ static const char *sql_cmd_get_wish_table =
 
 static const char *sql_cmd_insert_wish =
 "INSERT INTO WishTable (GameId) VALUES "
-"(SELECT id FROM GameTable Where Name=%Q);"
+"((SELECT id FROM GameTable WHERE Name=%Q));"
 ;
 
 static const char *sql_cmd_delete_wish =
 "DELETE FROM WishTable WHERE id=%s;"
+;
+
+static const char *sql_cmd_delete_wish_by_name =
+"DELETE FROM WishTable WHERE GameId="
+"((SELECT id FROM GameTable where Name=%Q));"
 ;
 
 static const char *sql_cmd_search_wish = 
@@ -310,6 +315,12 @@ void DB_InsertLog(sqlite3 *db, const char *name, const char *start_date, const c
 			conv_start_date,
 			conv_end_date,
 			score
+		   );
+
+	DB_Exec(
+			db,
+			sql_cmd_delete_wish_by_name,
+			name
 		   );
 	
 	sqlite3_free(conv_start_date);
