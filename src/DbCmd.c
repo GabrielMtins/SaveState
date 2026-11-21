@@ -24,6 +24,14 @@ static const char *sql_cmd_create_tables =
 "ON DELETE CASCADE "
 "ON UPDATE CASCADE"
 ");"
+
+"CREATE TABLE IF NOT EXISTS WishTable ("
+"id INTEGER PRIMARY KEY,"
+"GameId INTEGER UNIQUE NOT NULL,"
+"FOREIGN KEY (GameId) REFERENCES GameTable(id) "
+"ON DELETE CASCADE "
+"ON UPDATE CASCADE"
+");"
 ;
 
 static const char *sql_cmd_insert_game = 
@@ -89,6 +97,42 @@ static const char *sql_cmd_search_log =
 "INNER JOIN LogTable l on g.id = l.GameId "
 "WHERE g.Name LIKE %Q "
 "ORDER BY l.StartDate DESC;"
+;
+
+static const char *sql_cmd_get_wish_table = 
+"SELECT "
+"w.id as id,"
+"g.Name as Name,"
+"g.Genre as Genre,"
+"g.Platform as Platform,"
+"g.Year as Year "
+"FROM WishTable w "
+"INNER JOIN GameTable g "
+"on g.id = w.GameId "
+"ORDER BY g.Name ASC;"
+;
+
+static const char *sql_cmd_insert_wish =
+"INSERT INTO WishTable (GameId) VALUES "
+"(SELECT id FROM GameTable Where Name=%Q);"
+;
+
+static const char *sql_cmd_delete_wish =
+"DELETE FROM WishTable WHERE id=%s;"
+;
+
+static const char *sql_cmd_search_wish = 
+"SELECT "
+"w.id as id,"
+"g.Name as Name,"
+"g.Genre as Genre,"
+"g.Platform as Platform,"
+"g.Year as Year "
+"FROM WishTable w "
+"INNER JOIN GameTable g "
+"on g.id = w.GameId "
+"WHERE g.Name LIKE %Q OR g.Genre LIKE %Q OR g.Platform LIKE %Q OR g.Year Like %Q "
+"ORDER BY g.Name ASC;"
 ;
 
 static const char *sql_cmd_count_stats =
@@ -321,6 +365,49 @@ void DB_SearchLog(sqlite3 *db, Table *table, const char *name) {
 			);
 
 	sqlite3_free(tmp);
+}
+
+void DB_InsertWish(sqlite3 *db, const char *name) {
+	DB_Exec(
+			db,
+			sql_cmd_insert_wish,
+			name
+		   );
+}
+
+void DB_DeleteWish(sqlite3 *db, const char *id) {
+	DB_Exec(
+			db,
+			sql_cmd_delete_wish,
+			id
+		   );
+}
+
+void DB_GetWishTable(sqlite3 *db, Table *table) {
+	DB_GetTable(
+			db,
+			table,
+			sql_cmd_get_wish_table
+			);
+}
+
+void DB_SearchWish(sqlite3 *db, Table *table, const char *name) {
+	if(name == NULL || name[0] == '\0') {
+		DB_GetWishTable(db, table);
+		return;
+	}
+
+	char *like_str = sqlite3_mprintf("%%%s%%", name);
+
+	DB_GetTable(
+			db,
+			table,
+			sql_cmd_search_wish,
+			like_str,
+			like_str,
+			like_str,
+			like_str
+			);
 }
 
 void DB_GetStats(sqlite3 *db, Table *table, const char *column, int year) {

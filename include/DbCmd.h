@@ -36,6 +36,14 @@ void DB_GetLogTable(sqlite3 *db, Table *table);
 
 void DB_SearchLog(sqlite3 *db, Table *table, const char *name);
 
+void DB_InsertWish(sqlite3 *db, const char *name);
+
+void DB_DeleteWish(sqlite3 *db, const char *id);
+
+void DB_GetWishTable(sqlite3 *db, Table *table);
+
+void DB_SearchWish(sqlite3 *db, Table *table, const char *name);
+
 void DB_GetStats(sqlite3 *db, Table *table, const char *column, int year);
 
 #endif
