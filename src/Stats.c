@@ -45,8 +45,8 @@ static void Stats_DrawSearchBar(App *app, StatsState *state) {
 static void Stats_DrawGraph(App *app, StatsState *state) {
 	if(!state->redraw_graph) return;
 
-	Table *current_table;
-	const char *label_desc;
+	Table *current_table = NULL;
+	const char *label_desc = "";
 	static const int label_width = 255;
 	char current_label[label_width + 1];
 	WINDOW *win = app->content_window;
