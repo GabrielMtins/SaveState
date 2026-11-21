@@ -34,19 +34,22 @@ commands:
 - **W (Capital W)**: Add a game to wishlist (when you are in the **Games** tab).
 - **i**: Insert a new log for that game (when you are in the **Games** tab).
 - **c**: Change a game entry or a log entry.
-- **f**: Filter a game or log. You can also use it on the **Stats** tab
+- **d**: Delete a game, log or a wish entry.
+- **f**: Filter a game, log or a wish. You can also use it on the **Stats** tab
   to filter by year.
 - **h, j, k, l**: General navigation.
 - **q**: Quit.
 
-The program has three main tabs: **Games**, **Diary** and **Stats**. On the
-**Games** tab, you can view, filter and add games or update game data and
-insert logs. On the **Diary** tab, you can filter logs or update log data.
+The program has four main tabs: **Games**, **Diary**, **Stats** and
+**WishList**. On the **Games** tab, you can view, filter and add games or
+update game data and insert logs or add games to the WishList. On the **Diary**
+tab, you can filter logs or update log data. On the **WishList**, you can view
+games you wish to play or delete them.
 
 When adding a diary entry, the date **must** be in the format `dd/mm/yyyy`.
 
 On the **Stats** tab, you can view statistics about the games you have played.
-If you press f, you can view statistics for a specific year.
+If you press f and type a year, you can view statistics for a specific year.
 
 ## Configuration
 
