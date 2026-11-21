@@ -10,6 +10,7 @@ later**.
 ![](screenshots/games.png)
 ![](screenshots/diary.png)
 ![](screenshots/stats.png)
+![](screenshots/wishlist.png)
 
 ## Building
 
